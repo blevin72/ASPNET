@@ -5,7 +5,7 @@ using Dapper;
 
 namespace Testing.Models
 {
-	public class ProductRepository:IProductRepository
+    public class ProductRepository : IProductRepository
 	{
 		private readonly IDbConnection _conn; //field
 
@@ -17,6 +17,11 @@ namespace Testing.Models
         public IEnumerable<Product> GetAllProducts()
         {
             return _conn.Query<Product>("SELECT * FROM PRODUCTS;"); //query our BestBuy database
+        }
+
+        public Product GetProduct(int id)
+        {
+            return _conn.QuerySingle<Product>("SELECT * FROM PRODUCTS WHERE PRODUCTID = @id", new { id = id });
         }
     }
 }
